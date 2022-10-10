@@ -6,9 +6,15 @@ import SearchBar from './components/SearchBar.jsx';
 import data, { Cairns } from './data.js';
 
 function App() {
+  const [state, setState] = React.useState([]);
+
+
   return (
     <div className="App">
       <div>
+      <SearchBar
+          onSearch={(ciudad) => alert(ciudad)}
+        />
         <Card
           max={Cairns.main.temp_max}
           min={Cairns.main.temp_min}
@@ -20,14 +26,11 @@ function App() {
       <hr />
       <div>
         <Cards
-          cities={data}
+          cities={state}
         />
       </div>
       <hr />
       <div>
-        <SearchBar
-          onSearch={(ciudad) => alert(ciudad)}
-        />
       </div>
     </div>
   );
