@@ -1,37 +1,62 @@
 import React from 'react';
 import './App.css';
-import Card from './components/Card.jsx';
 import Cards from './components/Cards.jsx';
 import SearchBar from './components/SearchBar.jsx';
-import data, { Cairns } from './data.js';
+
+const apiKey = process.env.REACT_APP_APIKEY;
 
 function App() {
-  const [state, setState] = React.useState([]);
+  const [state, setCities] = React.useState([]);
+
+  function onSearch(ciudad) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&units=metric`)
+      .then(r => r.json())
+      .then((recurso) => {
+        if(recurso.main !== undefined){
+          const ciudad = {
+            min: Math.round(recurso.main.temp_min),
+            max: Math.round(recurso.main.temp_max),
+            img: recurso.weather[0].icon,
+            id: recurso.id,
+            wind: recurso.wind.speed,
+            temp: recurso.main.temp,
+            name: recurso.name,
+            weather: recurso.weather[0].main,
+            clouds: recurso.clouds.all,
+            latitud: recurso.coord.lat,
+            longitud: recurso.coord.lon
+          };
+          const exist = state.find((c) => c.id === ciudad.id);
+          if (!exist){
+            setCities((oldCities) => { 
+              return [...oldCities, ciudad];
+            });
+          }
+        } else {
+          alert("Ciudad no encontrada");
+        }
+      });
+
+    }
+
+    function onClose(id) {
+      setCities(oldCities => oldCities.filter(c => c.id !== id));
+    }
 
 
   return (
     <div className="App">
       <div>
       <SearchBar
-          onSearch={(ciudad) => alert(ciudad)}
-        />
-        <Card
-          max={Cairns.main.temp_max}
-          min={Cairns.main.temp_min}
-          name={Cairns.name}
-          img={Cairns.weather[0].icon}
-          onClose={() => alert(Cairns.name)}
+          onSearch={(ciudad) => onSearch(ciudad)}
         />
       </div>
       <hr />
       <div>
         <Cards
-          cities={state}
-        />
+          cities={state} onClose={onClose}/>
       </div>
       <hr />
-      <div>
-      </div>
     </div>
   );
 }

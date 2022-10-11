@@ -3,3 +3,5 @@ Es creado - Se actualiza (se renderiza) - Es desmontado del DOM(lo saco, elimino
 
 ESTADO: es como la memoria que puedo almacenar dentro de un componente. 
 Por ej podemos crear un componente de tipo contador, donde tiene un valor actual y con algunos botones podemos cambiar ese valor
+
+Fetch es la forma actual de solicitarle informacion a un backend, Fetch devuelve una promesa
