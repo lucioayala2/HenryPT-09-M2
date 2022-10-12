@@ -1,0 +1,94 @@
+Al trabajar en React, trabajamos con una metodologia llamada SPA -> Single Page Application
+Por qué se la considera así? -> La pagina no se recarga, y todo surge a partir de una pagina sola, el resto se va procesando
+
+Vamos a usar React Router
+Está el React Router Dom -> Para aplicaciones de escritorio
+Y React Router Native -> Aplicaciones mobiles
+
+Como arrancamos una aplicacion que soporte paginas? Con un componente <Router > El cual va a englobar nuestro componente principal Application
+Modernamente utilizamos <BrowserRouter />, donde se recomienda colocarlo? -> En lo que envuelve a nuestra app
+
+Lo instalamos con npm i react-router-dom@5.3.4
+      <Route path="/">
+        <h1>Home Page</h1>
+      </Route>
+    La '/' dice que es la ruta principal
+Podemos agregarle un exact={true} -> para que no muestre todo lo renderizado despues de la '/' sino que muestre el contenido exacto de esa pagina. Tambien podemos ponerlo suelto como exact
+
+strict -> pide que estén incluso las barras al final
+sensitive -> es sensible a minusculas y mayusculas  Estas dos casi nunca se usan xd
+
+Para linkear paginas para un nav por ejemplo -> No usamos <a>, usamos <Link> para evitar que recargue la pagina al dar click -> <Link to=''>
+
+<NavLink> Funciona igual que link pero ademas tiene otras 3 propiedades
+activeClassName -> Renombramos la clase active
+exact -> Para que sea exacta la ruta
+activeStyle -> Pones los estilos a la clase activa
+
+
+<Route> Tiene 3 metodos adicionales
+component -> le pasamos un componente como ya hicimos en el ejemplo
+render -> hay que pasarle una funcion, y esa funcion recibe algunas propiedades que nos ayudan a trabajar con las rutas 
+como pushear una nueva ruta o saber de rutas dinamicas
+children -> son los hijos que podemos ponerle al componente como ya tenemos puestos algunos
+
+Ya sabiendo todo lo de arriba, podemos crear rutas dinamicas
+
+
+
+Hooks que podemos usar en componentes funcionales para acceder a las propiedades de Route sin usar el render
+useParams -> Params es la propiedades a la que queremos acceder
+
+Nested Routes o Rutas anidadas
+Podemos anidar las rutas por ejemplo:
+      <Route path="/a" exact>
+        <h1>Page A</h1>
+        <Route path="/a/other" exact>
+            <h1>Page A - Other</h1>
+      </Route>
+      </Route>
+
+Prompt -> Componente que nos permite mostra run Pop up
+<Prompt
+  when={condition} -> booleano que determina si el prompt debe mostrarse o no cuando se intente navegar a otro path
+  message="Are you sure you want to leave?" -> podemos pasarle un string o una funcion, en el primer caso muestra simplemente el mensaje y en el segundo permite mayor customizacion, posbilitanto el acceso a 'location' y 'action'
+ />
+
+ Redirect -> Componente que nos redireccion a otra ruta
+ <Route exact path="/">
+  {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+</Route>
+
+to -> puede ser un string indicando la URL a la que se debe redirigir o un objeto con mayor informacion (pathname, search, state)
+from -> string indicando una URL que si la aplicacion intenta acceder automaticamente redirigirá hacia la URL indicado en el to
+
+
+Actualizar de Router 5 a la version 6 -> pnpm add react-router-dom@latest
+Esto rompe el codigo, para solucionarlo, las rutas de <Route> Deben estar englobadas por los tag <Routes>
+- En lugar de
+<Route path='/'>
+  <Nav onSearch={onSearch}/>
+</Route>  
+Ahora es:
+<Route path='/*' element={<Nav onSearch={onSearch}/> }/>
+---
+<Route path="/about" component={About} /> ahora es
+<Route path="/about" element={<About />} />
+---
+  <Route path='/' exact>
+    <Cards
+      cities={cities}
+      onClose={onClose}
+      />
+  </Route> ahora es
+
+  <Route path='/' element={<Cards
+    cities={cities}
+    onClose={onClose}
+  />} />
+
+En router 6, por default las rutas son exactas, se agrega el '*' si queremos que la ruta no lo sea
+
+
+
+----- HomeWork -----
