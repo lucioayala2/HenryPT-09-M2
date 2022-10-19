@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'; // esto conecta react con redux
 import Counter from './components/Counter';
 import counter from './reducers';
 
@@ -17,7 +17,7 @@ const store = createStore(counter);
 // Esto es necesario porque el store necesita saber hacia dónde está pasando su estado. 
 // El componente Provider es donde "vive" el store.
 ReactDOM.render(
-  <Provider store={store}>
+   <Provider store={store}>
     <Counter />
   </Provider>,
   document.getElementById('root')
