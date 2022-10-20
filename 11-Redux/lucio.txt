@@ -1,0 +1,56 @@
+Redux
+Facilita el poder compartir propiedades entre componentes, sin necesidad de hacer puentes para llegar a cada componente
+Nos da la posibilidad de tener un Estado global, al que todos los componentes pueden acceder
+
+Tres principios fundamentales de Redux
+- Es la unica fuente de la verdad: Solo va a haber un estado global, se puede tener estados locales igualmente. Pero solo hay uno solo global
+- Ese estado debe ser de solo-lectura (read-only): No debe modificarse el estado global directamente. Para eso están los metodos que lo modifican
+- Los cambios deben realizarse por funciones 'puras': Son funciones que no deben modificar sus inputs
+
+PARA COPIAR OBJETOS NUEVOS USANDO OTROS OBJETOS, USAMOS:
+var newObj = JSON.parse(JSON.stringify(objB)) //objB es el objeto que estariamos copiando con sus propiedades
+
+
+La 'Store' es donde está toda la logica de Redux, entre eso, está el Estado
+const store = redux.createStore() y le mandamos lo que hace el reducer
+Que es el reducer? => es la funcion pura que se encarga de modificar el estado
+
+PARA TRABAJAR CON Redux
+npm install --save redux react-redux 
+
+Es buena practica crear la accion en una constante con el nombre de lo que haría
+
+ACTION CREATE => Es una funcion que me retorna un objeto
+ACTION CREATOR => Es una funcion que me devuelve la accion (seria el function add)
+
+
+USA ESTO PARA LA PARTE DEL ASYNC
+npm add redux-thunk =>  libreria 
+const { createStore, applyMiddleware } = require('redux');
+const thunk = require('redux-thunk').default;
+
+var store = createStore(contador, applyMiddleware(thunk));
+
+Un middleware actua en el medio de la ejecucion normal 
+Redux thunk => cuando se despacha algo, lo que espera redux es que se despache una accion, un objeto.
+Como es un middleware se ejecuta cuando se despachan las cosas, y redux thunk pregunta que tipo de dato estoy retornando
+Si mando una funcion, redux thunk corta ahi la ejecucion normal y ejecuta esa funcion pasandole el dispatch como argumento
+Esto nos deja despachar acciones de forma asincrona
+
+
+En redux tenemos el connect
+import { connect } from 'react-redux';
+
+El connect dice: Quiero conectar el componente donde está el connect, al provedor de Redux. Y del provedor de Redux me quiero quedar con 
+export default connect(mapStateToProps, { increment, decrement })(Counter);
+                        estas propiedades o despachar estas acciones
+
+Conecta las propiedades al componente, y lo ejecuta
+
+Al connect le pasamos dos argumentos: state y action
+export default connect (state, action)
+y le ponemos el componente al que queremos aplicarle las propiedades
+export default connect (state, action)(Componente);
+
+
+Cuando el componente solo despacha acciones, el primer argumento del connect va como null y el segundo: la funcion mapDispatchToProps

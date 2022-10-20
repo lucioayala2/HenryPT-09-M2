@@ -1,5 +1,6 @@
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
+export const SET_COUNT = 'SET_COUNT';
 
 // Nuestras actions (action creators) devolverán un paquete de actions que nuestro reducer recibirá. 
 // ¿Cómo es el paquete de acción? Tengan en cuenta que el creador de la acción no es en absoluto responsable 
@@ -14,4 +15,8 @@ export const increment = () => {
 export const decrement = () => {
   // Completa la funcion
   return { type: DECREMENT  }
+};
+export const set = (value) => {
+  // Completa la funcion
+  return { type: SET_COUNT, payload: value }
 };
