@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useCountMoviesFavorites } from '../../hooks/useCountMoviesFavorites'
 import Logo from '../../logoHenry.png'
 
 import './Navbar.css';
 
 export default function NavBar() {
+    const {countFav} = useCountMoviesFavorites();
     return (
         <header className="navbar">
             <div>
@@ -14,7 +16,7 @@ export default function NavBar() {
                 <ul className="list">
                     <li className="list-item">
                         <NavLink exact to="/" >Home</NavLink>
-                        <NavLink to="/favs" >Favoritas</NavLink>
+                        <NavLink to="/favs" >{`Favoritas (${countFav})`}</NavLink>
                     </li>
                 </ul>
             </nav>
